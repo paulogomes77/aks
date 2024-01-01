@@ -1,5 +1,4 @@
 
 
 Conectar ao AKS
-
 az aks get-credentials –resource-group (ou -g) DEVRG –name webapp-cluster
