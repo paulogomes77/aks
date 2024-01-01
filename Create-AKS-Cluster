@@ -1,6 +1,6 @@
 
 
-Conectar ao AKS
+Conectar ao AKS na Cloud SHell:
 az aks get-credentials –resource-group (ou -g) DEVRG –name webapp-cluster
 
 To get the required credentials to access your cluster, you need to type the
