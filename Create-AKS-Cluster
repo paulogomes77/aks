@@ -2,3 +2,11 @@
 
 Conectar ao AKS
 az aks get-credentials –resource-group (ou -g) DEVRG –name webapp-cluster
+
+To get the required credentials to access your cluster, you need to type the
+following command:
+az aks get-credentials \
+--resource-group rg-handsonaks \
+--name handsonaks
+
+
