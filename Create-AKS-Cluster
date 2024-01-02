@@ -1,3 +1,47 @@
+Kubernetes Cluster No Azure - The Hard way
+
+
+# Criar um UID para usar em todos os nomes relacionados com o cluster. Há quem use 8 carateres, penso que 6 bastam para não haver sobreposição com outros nomes no Azure. Com este identificador, também conseguimos diferenciar este conjunto de Resources de outros que já tenhamos ou que venhamos a criar.
+RESOURCE_UID=$(uuidgen | cut -c1-6)
+echo "RESOURCE_UID: $RESOURCE_UID"
+
+
+# Definir variaveis para a rede das VM (Kubernetes). No caso do nome da VNET e do Resrouce Group, estes são completados com o UID gerado acima.
+VNET_NAME="vnet-kube-$RESOURCE_UID"
+VNET_RG="rg-vnet-kube-$RESOURCE_UID"
+VNET_REGION="westeurope"
+VNET_SUBSCRIPTION="AzureSubscription1"
+
+
+# Criar o Resource Group para a VNET
+az group create \
+  --name $VNET_RG \
+  --location $VNET_REGION \
+  --subscription $VNET_SUBSCRIPTION
+
+
+# Criar a VNET para as VM que vão conter o Kubernetes
+az network vnet create \
+  --name $VNET_NAME \
+  --resource-group $VNET_RG \
+  --address-prefixes 192.168.1.0/24 \
+  --location $VNET_REGION \
+  --subscription $VNET_SUBSCRIPTION
+
+
+# Criar as VM que serão os hosts do Kubernetes (Master e Worker Nodes)
+
+## Obter a VNET ID
+VNET_NAME="vnet-web-$RESOURCES_UID"
+VNET_RG="rg-vnet-web-$RESOURCES_UID"
+SUBNET_NAME="subnet-web-$RESOURCES_UID"
+VNET_ID=$(az network vnet show --resource-group $VNET_RG --name $VNET_NAME --query id -o tsv)
+SUBNET_ID=$(az network vnet subnet show --resource-group $VNET_RG --vnet-name $VNET_NAME --name $SUBNET_NAME --query id -o tsv)
+
+
+# Alguns comandos úteis:
+az account list
+az account list --output table
 
 
 Conectar ao AKS na Cloud SHell:
@@ -8,5 +52,3 @@ following command:
 az aks get-credentials \
 --resource-group rg-handsonaks \
 --name handsonaks
-
-
