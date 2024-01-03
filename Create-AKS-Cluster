@@ -9,7 +9,7 @@ echo "resourcesId: $resourcesId"
 ## Definição de variaveis para a rede das VM (Kubernetes). Por forma a melhor identificação, todos os resources levam no final o Id gerado acima.
 rgName="rg-kube-$resourcesId"
 vnetName="vnet-kube-$resourcesId"
-subnetName="subnet-kub-$resourcesId"
+subnetName="subnet-kube-$resourcesId"
 location="northeurope"
 subscription="AzureSubscription1"
 
@@ -29,25 +29,34 @@ az network vnet create \
   --location $location \
   --subscription $subscription
 
-# Criar a placa de rede
-nicName="nic01-$resourcesId"
-az network nic create --resource-group $rgName --name $nicName --vnet-name $vnetName --subnet $subnetName
-
 ## Criar uma VM
+vmName="kubecontrol01"
 az vm create \
   --location $location \
   --subscription $subscription \
   --resource-group $rgName \
-  --name "kubecontrol01-$resourcesId" \
+  --name "$vmName-$resourcesId" \
   --ssh-key-values $HOME/.ssh/id_rsa.pub \
   --admin-username paulo \
   --image Ubuntu2204 \
   --nsg-rule SSH \
-  --size Standard_B1ms
+  --size Standard_B1ms \
   --vnet-name $vnetName \
-  --subnet $subnetName
+  --subnet $subnetName \
+  --public-ip-address "" \
+  --os-disk-delete-option delete \
+  --os-disk-name $vmName-osDisk01-$resourcesId
 
 
+--os-disk-storage-account-type Standard_LRS \
+  
+
+
+
+# Parar uma VM e todas as dependências
+az vm stop \
+  --resource-group $rgName \
+  --name kubecontrol01-2c25cc
 
 
 # Kubernetes Cluster no Azure - The Hard way
@@ -105,11 +114,23 @@ az vm create \
   --nsg-rule SSH \
   --size Standard_B1ms
 
+
+
+
 # Alguns comandos úteis:
 az account list
 az account list --output table
 az group create --location westeurope --resource-group rg-vm-kube-$RESOURCE_UID
 az vm list-sizes --location eastus2 --output table
+az vm image list --offer CentOS --publisher OpenLogic --all --output table
+az vm list-sizes --location eastus2 --output table
+
+
+# Criar a placa de rede
+nicName="nic01-$resourcesId"
+az network nic create --resource-group $rgName --name $nicName --vnet-name $vnetName --subnet $subnetName
+
+
 
 Conectar ao AKS na Cloud SHell:
 az aks get-credentials –resource-group (ou -g) DEVRG –name webapp-cluster
