@@ -6,12 +6,29 @@ Gerar um ID para usar em todos os nomes relacionados com o cluster. Há quem use
 resourcesId=$(uuidgen | cut -c1-6)
 echo "resourcesId: $resourcesId"
 
-# Definição de variaveis para a rede das VM (Kubernetes). Por forma a melhor identificação, todos os resources levam no final o Id gerado acima.
+## Definição de variaveis para a rede das VM (Kubernetes). Por forma a melhor identificação, todos os resources levam no final o Id gerado acima.
 rgName="rg-kube-$resourcesId"
 vnetName="vnet-kube-$resourcesId"
 subnetName="subnet-kub-$resourcesId"
 location="northeurope"
 subscription="AzureSubscription1"
+
+## Criar o grupo de recursos
+az group create \
+  --name $rgName \
+  --location $location \
+  --subscription $subscription
+
+
+## Criar a Vnet e Subnet
+az network vnet create \
+  --resource-group $rgName \
+  --name $vnetName \
+  --address-prefixes 10.0.0.0/16 \
+  --subnet-name $subnetName \
+  --subnet-prefix 10.0.0.0/24
+  --location $location \
+  --subscription $subscription
 
 
 
@@ -22,7 +39,14 @@ vmName="NomeDaVM"
 adminUsername="SeuUsuario"
 adminPassword="SuaSenha"
 
-
+az network vnet create \
+  --name $VNET_NAME \
+  --resource-group $VNET_RG \
+  --address-prefixes 192.0.0.0/8 \
+  --subnet-name subnet-aks-$RESOURCES_UID \
+  --subnet-prefixes 192.10.0.0/16 \
+  --location $VNET_REGION \
+  --subscription $VNET_SUBSCRIPTION
 
 
 # Kubernetes Cluster no Azure - The Hard way
