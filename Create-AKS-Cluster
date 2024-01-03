@@ -19,7 +19,6 @@ az group create \
   --location $location \
   --subscription $subscription
 
-
 ## Criar a Vnet e Subnet
 az network vnet create \
   --resource-group $rgName \
@@ -30,23 +29,25 @@ az network vnet create \
   --location $location \
   --subscription $subscription
 
+# Criar a placa de rede
+nicName="nic01-$resourcesId"
+az network nic create --resource-group $rgName --name $nicName --vnet-name $vnetName --subnet $subnetName
+
+## Criar uma VM
+az vm create \
+  --location $location \
+  --subscription $subscription \
+  --resource-group $rgName \
+  --name "kubecontrol01-$resourcesId" \
+  --ssh-key-values $HOME/.ssh/id_rsa.pub \
+  --admin-username paulo \
+  --image Ubuntu2204 \
+  --nsg-rule SSH \
+  --size Standard_B1ms
+  --vnet-name $vnetName \
+  --subnet $subnetName
 
 
-location="Localizacao"
-vnetName="NomeDaVNET"
-subnetName="NomeDaSubnet"
-vmName="NomeDaVM"
-adminUsername="SeuUsuario"
-adminPassword="SuaSenha"
-
-az network vnet create \
-  --name $VNET_NAME \
-  --resource-group $VNET_RG \
-  --address-prefixes 192.0.0.0/8 \
-  --subnet-name subnet-aks-$RESOURCES_UID \
-  --subnet-prefixes 192.10.0.0/16 \
-  --location $VNET_REGION \
-  --subscription $VNET_SUBSCRIPTION
 
 
 # Kubernetes Cluster no Azure - The Hard way
