@@ -45,10 +45,10 @@ az vm create \
   --subnet $subnetName \
   --public-ip-address "" \
   --os-disk-delete-option delete \
-  --os-disk-name $vmName-osDisk01-$resourcesId
+  --os-disk-name $vmName-osDisk01-$resourcesId \
+  --storage-sku Standard_LRS
 
 
---os-disk-storage-account-type Standard_LRS \
   
 
 
