@@ -1,19 +1,22 @@
-# Kubernetes Cluster no Azure - The Hard way
+# Azure Kubernetes Service - AKS (em elaboração - 15-02-2024)
 
-## 1ª Parte - Criação da infraestutura: VM, Rede, etc.
+## Definição de variáveis
 
-Gerar um ID para usar em todos os nomes relacionados com o cluster. Há quem use 8 carateres, penso que 6 bastam para não haver sobreposição com outros nomes no Azure. Com este identificador, também se consegue diferenciar este conjunto de Resources de outros que já tenhamos ou que venhamos a criar.
+Primeiro, costumo gerar um ID para usar em todos os nomes relacionados com o cluster. Há quem use 8 carateres, penso que 6 bastam para não haver sobreposição com outros nomes no Azure. Com este identificador, também se consegue diferenciar este conjunto de Resources de outros que já tenhamos ou que venhamos a criar:
+```
 resourcesId=$(uuidgen | cut -c1-6)
 echo "resourcesId: $resourcesId"
-
-## Definição de variaveis para a rede das VM (Kubernetes). Por forma a melhor identificação, todos os resources levam no final o Id gerado acima.
+``` 
+Definição de variáveis para a rede das VM (Kubernetes) acrescentand o UID gerado no passo anterior:
+```
 rgName="rg-kube-$resourcesId"
 vnetName="vnet-kube-$resourcesId"
 subnetName="subnet-kube-$resourcesId"
 location="northeurope"
 subscription="AzureSubscription1"
+```
 
-## Criar o grupo de recursos
+## Criar o grupo de recursos (Resource Group)
 az group create \
   --name $rgName \
   --location $location \
@@ -29,6 +32,10 @@ az network vnet create \
   --location $location \
   --subscription $subscription
 
+
+
+
+# 1ª Parte - Criação da infraestutura: VM, Rede, etc. (para outro turorial)
 ## Criar uma VM
 vmName="kubecontrol01"
 az vm create \
