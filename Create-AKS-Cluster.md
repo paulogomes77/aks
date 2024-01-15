@@ -9,11 +9,14 @@ echo "resourcesId: $resourcesId"
 ``` 
 Definição de variáveis para a rede das VM (Kubernetes) acrescentand o UID gerado no passo anterior:
 ```
-rgName="rg-kube-$resourcesId"
-vnetName="vnet-kube-$resourcesId"
-subnetName="subnet-kube-$resourcesId"
+rgName="rg-aks-$resourcesId"
+vnetName="vnet-aks-$resourcesId"
+subnetName="subnet-aks-$resourcesId"
 location="northeurope"
 subscription="AzureSubscription1"
+
+vnetId=$(az network vnet show --resource-group $rgName --name $vnetName --query id -o tsv)
+subnetId=$(az network vnet subnet show --resource-group $rgName --vnet-name $vnetNameE --name $subnetName --query id -o tsv)
 ```
 
 ## Criar o grupo de recursos (Resource Group)
