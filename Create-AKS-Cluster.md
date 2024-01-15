@@ -17,12 +17,16 @@ subscription="AzureSubscription1"
 ```
 
 ## Criar o grupo de recursos (Resource Group)
+```
 az group create \
   --name $rgName \
   --location $location \
   --subscription $subscription
+```
 
 ## Criar a Vnet e Subnet
+Uma VNet é uma rede para conectar resources, neste caso vamos criar uma rede com o cidr 10.0.0.0/16. No Azure um VNET normalmente tem pelo menos uma subnet, que é uma subdivisão da VNet. Em analogia, podemos pensar num prédio como sendo a VNet e os apartamentos são as Subnet. Neste caso vamos criar uma subnet com cidr 10.0.0.0/24.
+```
 az network vnet create \
   --resource-group $rgName \
   --name $vnetName \
@@ -31,6 +35,6 @@ az network vnet create \
   --subnet-prefix 10.0.0.0/24
   --location $location \
   --subscription $subscription
-
+```
 
 
