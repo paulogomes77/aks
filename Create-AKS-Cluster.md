@@ -45,5 +45,10 @@ az network vnet create \
 
 ## Outros comandos
 ```
+# Semelhante a um "kubectl get nodes" mas com o az cli:
 az aks machine list --resource-group test-rg  --cluster-name aks-cluster --nodepool-name nodepool1 -o table
+
+# Obter acesso para usar o kubectl:
+az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+
 ```
