@@ -7,7 +7,7 @@ Primeiro, costumo gerar um ID para usar em todos os nomes relacionados com o clu
 resourcesId=$(uuidgen | cut -c1-6)
 echo "resourcesId: $resourcesId"
 ``` 
-Definição de variáveis para a rede das VM (Kubernetes) acrescentand o UID gerado no passo anterior:
+Definição de variáveis para a rede das VM (Kubernetes) acrescentando o UID gerado no passo anterior:
 ```
 rgName="rg-aks-$resourcesId"
 vnetName="vnet-aks-$resourcesId"
@@ -41,3 +41,9 @@ az network vnet create \
 ```
 
 
+
+
+## Outros comandos
+```
+az aks machine list --resource-group test-rg  --cluster-name aks-cluster --nodepool-name nodepool1 -o table
+```
