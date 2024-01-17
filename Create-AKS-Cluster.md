@@ -41,8 +41,6 @@ az network vnet create \
 ```
 
 
-
-
 ## Outros comandos
 ```
 # Semelhante a um "kubectl get nodes" mas com o az cli:
