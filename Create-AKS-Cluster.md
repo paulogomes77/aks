@@ -51,4 +51,20 @@ az aks machine list --resource-group test-rg  --cluster-name aks-cluster --nodep
 # Obter acesso para usar o kubectl:
 az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
 
+# Eliminar o RG e seu conteúdo:
+az group delete --name myResourceGroup --yes --no-wait
+
+```
+
+## Utilitários para debud
+```
+# Criar um pod genérico com debian, por exemplo:
+kubectl run pod-teste01 --image=debian sleep infinity
+
+# Entrar no pod:
+kubectl exec -it pod-teste01 -- /bin/bash
+
+# Instalar ifconfig, ssh, ping:
+apt install net-tools ssh inetutils-ping
+
 ```
