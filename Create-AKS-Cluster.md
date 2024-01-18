@@ -66,7 +66,7 @@ az group delete --name myResourceGroup --yes --no-wait
 
 ```
 
-## Utilitários para debud
+## Utilitários para debug
 ```
 # Criar um pod genérico com debian, por exemplo:
 kubectl run pod-teste01 --image=debian sleep infinity
