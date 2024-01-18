@@ -46,7 +46,8 @@ az network vnet create \
 az aks install-cli
 
 # Obter acesso para usar o kubectl:
-az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+# (Pode ser necessário especificar o id da subscrição)
+az aks get-credentials --resource-group myResourceGroup --name myAKSCluster (--subscription id_subscrição)
 
 # Testar visualizando os nós:
 kubectl get nodes
