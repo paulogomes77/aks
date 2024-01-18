@@ -40,6 +40,17 @@ az network vnet create \
   --subscription $subscription
 ```
 
+## Interagir com o cluster
+```
+# Instalar o Kubectl:
+az aks install-cli
+
+# Obter acesso para usar o kubectl:
+az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+
+# Testar visualizando os nós:
+kubectl get nodes
+```
 
 ## Outros comandos
 ```
